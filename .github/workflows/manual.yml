@@ -1,0 +1,28 @@
+name: Manual Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_message:
+        description: 'Deployment commit message'
+        default: 'Manual deployment'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to GitHub Pages
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git add .
+        git commit -m "${{ github.event.inputs.deploy_message }}"
+        git push origin main:master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
