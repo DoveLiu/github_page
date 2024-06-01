@@ -23,6 +23,6 @@ jobs:
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git add .
         git commit -m "${{ github.event.inputs.deploy_message }}"
-        git push origin main:master
+        git push origin HEAD:master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
