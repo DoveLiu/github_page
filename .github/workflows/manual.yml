@@ -25,7 +25,7 @@ jobs:
         ref: master
 
     - name: Fetch all branches
-    run: git fetch --all
+      run: git fetch --all
 
     - name: Merge develop into master and deploy
       if: ${{ inputs.merge_develop }}
@@ -36,7 +36,7 @@ jobs:
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git add .
-        git commit -m "${{ github.event.inputs.deploy_message }}"
+        git commit -m "${{ inputs.deploy_message }}"
         git push origin HEAD:master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
