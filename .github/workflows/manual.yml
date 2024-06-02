@@ -8,6 +8,11 @@ on:
         default: 'Manual deployment'
         required: true
         type: string
+      merge_develop:
+        description: 'Merge develop branch into master'
+        default: true
+        required: true
+        type: boolean
 
 jobs:
   deploy:
@@ -17,8 +22,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Deploy to GitHub Pages
+    - name: Merge develop into master and deploy
+      if: ${{ inputs.merge_develop }}
       run: |
+        git fetch origin
+        git checkout master
+        git merge origin/develop
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git add .
