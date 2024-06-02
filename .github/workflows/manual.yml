@@ -21,6 +21,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Fetch all branches
+    run: git fetch --all
 
     - name: Merge develop into master and deploy
       if: ${{ inputs.merge_develop }}
